@@ -624,7 +624,7 @@
 ;; 結果の出力バッファと元のバッファを行き来したい場合は
 ;; ':stick t'の設定をするとよいでしょう
 (push '("*quickrun*") popwin:special-display-config)
-(global-set-key (kbd "C-c c") 'quickrun-with-arg)
+(global-set-key (kbd "C-c c") 'quickrun)
 
 (require 'direx)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
