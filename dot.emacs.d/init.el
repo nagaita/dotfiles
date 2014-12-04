@@ -100,6 +100,8 @@
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
+;; ファイルに変更があったらバッファを自動リロード
+(global-auto-revert-mode 1)
 
 ;;; 部分一致の補完機能を使う (t:ON/nil:OFF)
 ;;; p-bでprint-bufferとか
