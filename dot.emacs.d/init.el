@@ -1088,6 +1088,11 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 ;;
 (require 'scss-mode)
 (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+(defun scss-custom ()
+  (and
+   (set (make-local-variable 'css-indent-offset) 2)
+   (set (make-local-variable 'scss-compile-at-save) nil)))
+(add-hook 'scss-mode-hook '(lambda () (scss-custom)))
 
 ;;
 ;; 開いてるキーバインド
