@@ -1084,6 +1084,12 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (global-git-gutter-mode t)
 
 ;;
+;; sass
+;;
+(require 'scss-mode)
+(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
