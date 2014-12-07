@@ -32,6 +32,10 @@ fi
 if [ -d "/opt/go" ] ; then
     export GOROOT="/opt/go"
     export PATH="$PATH:$GOROOT/bin"
+
+    export GO_THIRD_PARTY="$HOME/go/third-party"
+    export GOPATH="$GO_THIRD_PARTY"
+    PATH="$GO_THIRD_PARTY/bin:$PATH"
 fi
 
 export JAVA_LIBS="$HOME/.java:$JAVA_LIBS";

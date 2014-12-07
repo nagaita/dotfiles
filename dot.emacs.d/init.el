@@ -214,10 +214,8 @@
 ;; C-c (1文字)
 ;;
 (define-key global-map (kbd "C-c c") 'smart-compile)
-(define-key global-map (kbd "C-c f") 'recentf-open-files)
 (define-key global-map (kbd "C-c h") 'help-for-help)
 (define-key global-map (kbd "C-c i") 'indent-region)
-;; C-c j is my java tools prefix. -> ~/.emacs.d/mylisp/my-java-tools.el
 (define-key global-map (kbd "C-c m") 'compile)            ; make
 (define-key global-map (kbd "C-c n") 'next-error)         ; エラー箇所に移動
 (define-key global-map (kbd "C-c p") 'ispell-buffer)      ; スペルチェッカ
@@ -418,7 +416,7 @@
 ;; ideのような入力支援
 ;;====================
 (require 'auto-complete-config)
-(global-auto-complete-mode 1)
+(ac-config-default)
 (setq ac-comphist-file (create-local-file-path "ac-comphist.dat"))
 
 ;;== undo-tree =======
@@ -1095,6 +1093,22 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
    (set (make-local-variable 'css-indent-offset) 2)
    (set (make-local-variable 'scss-compile-at-save) nil)))
 (add-hook 'scss-mode-hook '(lambda () (scss-custom)))
+
+;;
+;; golang
+;;
+(add-to-list 'exec-path (expand-file-name "~/go/third-party/bin"))
+(eval-after-load "go-mode"
+  '(progn
+     (require 'go-autocomplete)
+     (require 'auto-complete-config)
+     (setq ac-auto-start 2)
+     (setq ac-delay 0.05)
+
+     (add-hook 'go-mode-hook 'go-eldoc-setup)
+     (define-key go-mode-map (kbd "M-.") 'godef-jump)
+     (define-key go-mode-map (kbd "M-*") 'pop-tag-mark)
+     (define-key go-mode-map (kbd "C-c f") 'gofmt)))
 
 ;;
 ;; 開いてるキーバインド
