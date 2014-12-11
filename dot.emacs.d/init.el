@@ -1104,6 +1104,7 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
      (require 'auto-complete-config)
      (setq ac-auto-start 2)
      (setq ac-delay 0.05)
+     (setq gofmt-command "goimports")
 
      (add-hook 'go-mode-hook 'go-eldoc-setup)
      (define-key go-mode-map (kbd "M-.") 'godef-jump)
