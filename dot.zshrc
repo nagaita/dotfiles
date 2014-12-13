@@ -22,9 +22,20 @@ setopt pushd_ignore_dups
 alias -s html=firefox
 alias -s sparql="sparql --query"
 alias -s rq="sparql --query"
-alias -s go="go run"
+alias -s go="run_go"
 alias -s zip="unzip"
 alias -s tar.gz="tar zxvf"
+
+function run_go() {
+    for arg in $argv; do
+        case $arg in
+            *_test.go)
+                go test $arg ;;
+            *)
+                go run $arg ;;
+            esac
+    done
+}
 
 #
 # global alias
