@@ -161,10 +161,10 @@ fi
 /usr/bin/xmodmap $HOME/.Xmodmap 2> /dev/null
 # emacs --daemon
 
-function run-command-with-peco() {
+function select-history-with-peco() {
     BUFFER="`history -n 1 | tac | peco --query "$BUFFER"`"
     CURSOR=$#BUFFER
     zle clear-screen
 }
-zle -N run-command-with-peco
-bindkey '^r' run-command-with-peco
+zle -N select-history-with-peco
+bindkey '^r' select-history-with-peco
