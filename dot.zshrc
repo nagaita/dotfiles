@@ -25,15 +25,16 @@ alias -s rq="sparql --query"
 alias -s go="run_go"
 alias -s zip="unzip"
 alias -s tar.gz="tar zxvf"
-
 function run_go() {
     for arg in $argv; do
         case $arg in
             *_test.go)
                 go test $arg ;;
-            *)
+            *.go)
                 go run $arg ;;
-            esac
+            *)
+                echo "argument '$arg' is not golang file"
+        esac
     done
 }
 
@@ -170,7 +171,6 @@ fi
 [ -f ~/.zsh/plugin/incr*.zsh ] && source ~/.zsh/plugin/incr*.zsh
 
 /usr/bin/xmodmap $HOME/.Xmodmap 2> /dev/null
-# emacs --daemon
 
 function select-history-with-peco() {
     BUFFER="`history -n 1 | tac | peco --query "$BUFFER"`"
