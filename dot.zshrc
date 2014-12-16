@@ -27,6 +27,8 @@ alias -s zip="unzip"
 alias -s tar.gz="tar zxvf"
 function run_go() {
     for arg in $argv; do
+        goimports -w=true $arg
+
         case $arg in
             *_test.go)
                 go test $arg ;;
