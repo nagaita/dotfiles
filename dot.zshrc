@@ -150,7 +150,7 @@ function git-add-with-peco() {
 
 alias c='cd-with-peco'
 function cd-with-peco() {
-    local file="$(find . ! -wholename "*/.git{$|/*}" | peco)"
+    local file="$(find . ! -wholename "*/.git/*" | peco)"
 
     if [ -d $file ]; then
         cd $file
