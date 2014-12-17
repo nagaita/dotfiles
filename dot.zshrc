@@ -124,7 +124,6 @@ alias n='w3m http://google.co.jp'
 alias e='emacsclient -n'
 alias ee='emacsclient -nw'
 alias g='my-git'
-
 function my-git() {
     local oper="$argv[1]"
     case $oper in
@@ -148,6 +147,19 @@ function git-checkout-with-peco() {
 function git-add-with-peco() {
     git add -v $(git status -s | peco | sed -e 's/^...\(.*\)$/\1/g')
 }
+
+alias c='cd-with-peco'
+function cd-with-peco() {
+    local file="$(find . ! -wholename "*/.git{$|/*}" | peco)"
+
+    if [ -d $file ]; then
+        cd $file
+    else
+        cd $(dirname $file)
+    fi
+}
+
+
 
 # tmux/screenの自動起動設定
 #  Note: .bashrc or .zshrc に設定して使用して下さい。
