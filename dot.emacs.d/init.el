@@ -1117,6 +1117,13 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (require 'ox-reveal)
 
 ;;
+;; anzu
+;;
+(global-anzu-mode +1)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
