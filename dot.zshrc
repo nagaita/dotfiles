@@ -22,6 +22,7 @@ setopt pushd_ignore_dups
 alias -s html=firefox
 alias -s sparql="sparql --query"
 alias -s rq="sparql --query"
+alias -s py="python"
 alias -s go="run_go"
 alias -s zip="unzip"
 alias -s tar.gz="tar zxvf"
@@ -141,6 +142,19 @@ function my-git() {
 function git-checkout-with-peco() {
     local branch_name=$(git branch -av | peco | sed -e 's/^..\([^ ]*\).*$/\1/g')
     git checkout $branch_name
+    git branch
+}
+
+function git-checkout-from-remote-with-peco() {
+    remote_branch_name=$(git branch -r | peco | sed -e 's/^..\([^ ]*\).*$/\1/')
+    local_branch_name=${remote_branch_name#origin/}
+
+    if git branch | grep $local_branch_name > /dev/null ; then
+        git checkout $local_branch_name
+    else
+        git checkout -b $local_branch_name $remote_branch_name
+    fi
+
     git branch
 }
 
