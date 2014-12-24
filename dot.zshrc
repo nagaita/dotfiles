@@ -25,6 +25,7 @@ alias -s rq="sparql --query"
 alias -s py="python"
 alias -s go="run_go"
 alias -s zip="unzip"
+alias -s pdf="evince"
 alias -s tar.gz="tar zxvf"
 function run_go() {
     for arg in $argv; do
