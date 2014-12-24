@@ -1112,6 +1112,11 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
      (define-key go-mode-map (kbd "C-c f") 'gofmt)))
 
 ;;
+;; for reveal.js with org-mode
+;;
+(require 'ox-reveal)
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
