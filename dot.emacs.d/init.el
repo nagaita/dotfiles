@@ -745,7 +745,7 @@
 ;; pomodoro
 ;;______________________________________________________________________________
 (require 'pomodoro)
-(setq pomodoro:file "~/dropbox/org/pom.org")
+(setq pomodoro:file "~/Dropbox/org/pom.org")
 
 ;;; -*- mode:emacs-lisp; coding:utf-8 -*-
 ;;
