@@ -175,7 +175,17 @@ function cd-with-peco() {
     fi
 }
 
+alias p='cat-or-less'
+function cat-or-less() {
+    local file=$1
+    local line_of_file=$(wc -l $file | awk '{ print $1 }')
 
+     if [ $line_of_file -gt $LINES ]; then
+         less $file
+     else
+         cat $file
+     fi
+}
 
 # tmux/screenの自動起動設定
 #  Note: .bashrc or .zshrc に設定して使用して下さい。
