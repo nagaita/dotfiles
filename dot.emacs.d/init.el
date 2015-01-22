@@ -1107,6 +1107,8 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
      (setq gofmt-command "goimports")
 
      (add-hook 'go-mode-hook 'go-eldoc-setup)
+     (add-hook 'go-mode-hook (lambda ()
+                               (highlight-regexp "\\<err\\>" 'hi-red-b)))
      (define-key go-mode-map (kbd "M-.") 'godef-jump)
      (define-key go-mode-map (kbd "M-*") 'pop-tag-mark)
      (define-key go-mode-map (kbd "C-c f") 'gofmt)))
