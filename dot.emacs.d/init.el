@@ -1112,8 +1112,7 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
      (define-key go-mode-map (kbd "M-.") 'godef-jump)
      (define-key go-mode-map (kbd "M-*") 'pop-tag-mark)
      (define-key go-mode-map (kbd "C-c f") 'gofmt)
-     (define-key go-mode-map (kbd "C-c 9") 'golang-cmd-toggle-testing-pair)
-     ))
+     (define-key go-mode-map (kbd "C-9") 'golang-cmd-toggle-testing-pair)))
 
 (defun golang-cmd-toggle-testing-pair ()
   "Command for toggle testing pair."
