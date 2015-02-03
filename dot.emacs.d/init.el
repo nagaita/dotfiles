@@ -1097,7 +1097,7 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 ;;
 ;; golang
 ;;
-(add-to-list 'exec-path (expand-file-name "~/go/third-party/bin"))
+(add-to-list 'exec-path (expand-file-name "~/go/bin"))
 (eval-after-load "go-mode"
   '(progn
      (require 'go-autocomplete)
