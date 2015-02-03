@@ -1111,7 +1111,61 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
                                (highlight-regexp "\\<err\\>" 'hi-red-b)))
      (define-key go-mode-map (kbd "M-.") 'godef-jump)
      (define-key go-mode-map (kbd "M-*") 'pop-tag-mark)
-     (define-key go-mode-map (kbd "C-c f") 'gofmt)))
+     (define-key go-mode-map (kbd "C-c f") 'gofmt)
+     (define-key go-mode-map (kbd "C-c 9") 'golang-cmd-toggle-testing-pair)
+     ))
+
+(defun golang-cmd-toggle-testing-pair ()
+  "Command for toggle testing pair."
+  (interactive)
+  (golang-toggle-testing-pair (buffer-file-name)))
+
+(defun golang-toggle-testing-pair (path)
+  (cond ((golang-impl-code-file-p path)
+         (golang-jump-into-test-code-file path))
+        ((golang-test-code-file-p path)
+         (golang-jump-into-impl-code-file path))))
+
+(dont-compile
+  (require 'ert-expectations)
+  (when (fboundp 'expectations)
+    (expectations
+      (expect t
+        (golang-impl-code-file-p "foo.go"))
+      (expect nil
+        (golang-impl-code-file-p "foo_test.go"))
+      (expect t
+        (golang-test-code-file-p "foo_test.go"))
+      (expect nil
+        (golang-test-code-file-p "foo.go"))
+      (expect "foo_test.go"
+        (golang-convert-impl-code-path-to-test-code-path "foo.go"))
+      (expect "foo.go"
+        (golang-convert-test-code-path-to-impl-code-path "foo_test.go" )))))
+
+(defun golang-test-code-file-p (path)
+  "Return true when PATH ends with _test.go."
+  (not (eq nil (string-match "[^/]+?_test.go$" path))))
+
+(defun golang-impl-code-file-p (path)
+  "Return truen when PATH does not end with _test.go."
+  (not (golang-test-code-file-p path)))
+
+(defun golang-convert-impl-code-path-to-test-code-path (path)
+  "Convert PATH.go to PATH_test.go."
+  (replace-regexp-in-string "\\([^/]+?\\)\.go" "\\1_test.go" path))
+
+(defun golang-convert-test-code-path-to-impl-code-path (path)
+  "Convert PATH_test.go to PATH.go."
+  (replace-regexp-in-string "\\([^/]+?\\)_test\.go" "\\1.go" path))
+
+(defun golang-jump-into-test-code-file (path)
+  "Move from PATH.go to PATH_test.go."
+  (find-file (golang-convert-impl-code-path-to-test-code-path path)))
+
+(defun golang-jump-into-impl-code-file (path)
+  "Move from PATH_test.go to PATH.go."
+  (find-file (golang-convert-test-code-path-to-impl-code-path path)))
 
 ;;
 ;; for reveal.js with org-mode
