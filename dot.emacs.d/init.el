@@ -747,12 +747,11 @@
 (require 'pomodoro)
 (setq pomodoro:file "~/Dropbox/org/pom.org")
 
-;;; -*- mode:emacs-lisp; coding:utf-8 -*-
 ;;
 ;; yasnippet
 ;;______________________________________________________________________________
-(require 'yasnippet-config)
-(yas/setup "~/.emacs.d/site-lisp/yasnippet-0.6.1c/")
+(require 'yasnippet)
+(yas/initialize)
 
 ;; ファイル作成時にスニペットを自動展開するもの
 (require 'autoinsert)
