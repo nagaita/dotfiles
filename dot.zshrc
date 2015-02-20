@@ -25,6 +25,7 @@ alias -s go="run_go"
 alias -s zip="unzip"
 alias -s pdf="evince"
 alias -s tar.gz="tar zxvf"
+alias -s tex="latexmk -pdfdvi"
 function run_go() {
     for arg in $argv; do
         goimports -w=true $arg
