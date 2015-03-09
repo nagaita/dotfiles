@@ -753,6 +753,12 @@
 (require 'yasnippet)
 (yas/initialize)
 
+(defun extract-strcture-name ()
+  "Extract structure name above current point."
+  (save-excursion
+    (when (re-search-backward "type \\([^ ]*\\) struct {" nil t)))
+  (insert (match-string 1)))
+
 ;; ファイル作成時にスニペットを自動展開するもの
 (require 'autoinsert)
 (auto-insert-mode)
