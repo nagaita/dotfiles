@@ -218,3 +218,24 @@ function select-history-with-peco() {
 }
 zle -N select-history-with-peco
 bindkey '^r' select-history-with-peco
+
+#
+# cd-bookmark
+#
+BOOKMARK_FILE=$HOME/.dir_bookmark
+function add_bookmark() {
+    local dir=$(pwd)
+    if grep -e "^${dir}$" $BOOKMARK_FILE > /dev/null; then
+        echo "$dir already exists in bookmark file."
+    else
+        echo $dir >> $BOOKMARK_FILE
+        echo "Insert $dir to bookmark file."
+    fi
+}
+
+function cd_with_bookmark() {
+    cd $(tac $BOOKMARK_FILE | peco)
+}
+
+alias ba='add_bookmark'
+alias b='cd_with_bookmark'
