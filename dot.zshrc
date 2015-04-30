@@ -222,20 +222,7 @@ bindkey '^r' select-history-with-peco
 #
 # cd-bookmark
 #
-BOOKMARK_FILE=$HOME/.dir_bookmark
-function add_bookmark() {
-    local dir=$(pwd)
-    if grep -e "^${dir}$" $BOOKMARK_FILE > /dev/null; then
-        echo "$dir already exists in bookmark file."
-    else
-        echo $dir >> $BOOKMARK_FILE
-        echo "Insert $dir to bookmark file."
-    fi
-}
-
-function cd_with_bookmark() {
-    cd $(tac $BOOKMARK_FILE | peco)
-}
-
-alias ba='add_bookmark'
+. $HOME/bin/dirbm.sh
 alias b='cd_with_bookmark'
+alias ba='add_bookmark'
+alias be='edit_bookmark'
