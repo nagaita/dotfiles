@@ -1184,6 +1184,59 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
 ;;
+;; org-export
+;;
+(require 'org-export-generic)
+(org-set-generic-type
+ "blog"
+ '(:file-suffix    ".html"
+   :key-binding    ?B
+
+   :date-export    nil
+   :toc-export     nil
+   :author-export  nil
+   :tags-export    nil
+   :drawers-export nil
+
+   :title-format   ""
+
+   :body-header-section-numbers nil
+
+   :body-section-header-prefix  ("<h1>" "<h2>" "<h3>" "<h4>" "<h5>" "<h6>")
+   :body-section-header-format  "%s"
+   :body-section-header-suffix  ("</h1>\n" "</h2>\n" "</h3>\n"
+                               "</h4>\n" "</h5>\n" "</h6>\n")
+
+   :body-line-export-preformated t
+   :body-line-format "%s\n"
+   :body-text-prefix "<p>\n"
+   :body-text-suffix "</p>\n"
+
+   :body-bullet-list-prefix       (?* ?+ ?-)
+   :body-list-prefix              "<ul>\n"
+   :body-list-suffix              "</ul>\n"
+   :body-list-format              "<li>%s</li>\n"
+   :body-number-list-prefix       "<ol>\n"
+   :body-number-list-suffix       "</ol>\n"
+   :body-number-list-format       "<li>%s</li>\n"
+
+   :body-table-start               "<table>"
+   :body-table-end                 "</table>"
+   :body-table-row-start           "<tr>"
+   :body-table-row-end             "</tr>"
+   :body-table-cell-start          "<td>"
+   :body-table-cell-end            "</td>"
+;   :body-table-first-cell-start    "aaa"
+;   :body-table-interior-cell-start "bbb"
+;   :body-table-interior-cell-end   "ccc"
+;   :body-table-last-cell-end       "ddd"
+;   :body-table-hline-start         "eee"
+;   :body-table-hline-end           "fff"
+   :body-table-hline-start "aaaaa"
+   :body-table-hline-end   "bbbbb"
+   ))
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
