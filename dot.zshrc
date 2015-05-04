@@ -1,9 +1,8 @@
-#
-# ディレクトリ変更
-#
+# -*- mode:sh -*-
 
 # ディレクトリ名だけで cd できる
 setopt auto_cd
+
 # cd のあとに自動で ls
 function chpwd() { ls -F --color=auto }
 
@@ -13,6 +12,23 @@ setopt auto_pushd
 # ディレクトリスタックに重複するディレクトリを登録しない
 setopt pushd_ignore_dups
 
+# emacs風キーバインド
+bindkey -e
+
+# 日本語ファイル名を表示可能にする
+setopt print_eight_bit
+
+# ビープ音なし
+setopt no_beep
+
+# フローコントロールを無効にする
+setopt no_flow_control
+
+# C-dでzshを終了しない
+setopt ignore_eof
+
+# #以降をコメントにする
+setopt interactive_comments
 
 #
 # suffix rules
@@ -61,26 +77,34 @@ alias -g WL='| wc -l'
 #
 # 補完
 #
+fpath=($HOME/.zsh/plugin/zsh-completions/src(N-/) $fpath)
 autoload -Uz compinit
 compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=2
+autoload -Uz colors
+colors
+
+#
+# ディレクトリ移動
+#
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
 
 # コマンド名/引数のスペルミスを訂正する("setopt correct" はコマンド名のみ)
 setopt correct_all
-
 PROMPT="%~%% "
 PROMPT2="%_% % "
 SPROMPT="%r is correct? [nyae]..."
 
 
 
-
-
 #
 # ヒストリ機能の設定
 #
-
 HISTFILE=~/.zsh_history
-HISTSIZE=5000000
+HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
 
 # history コマンド自体は履歴に記録しない
@@ -206,8 +230,6 @@ if [ -z "$TMUX" -a -z "$STY" ]; then
         screen -rx || screen -D -RR
     fi
 fi
-
-[ -f ~/.zsh/plugin/incr*.zsh ] && source ~/.zsh/plugin/incr*.zsh
 
 /usr/bin/xmodmap $HOME/.Xmodmap 2> /dev/null
 
