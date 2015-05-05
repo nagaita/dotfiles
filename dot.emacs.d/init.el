@@ -789,9 +789,7 @@
   (yas/expand-snippet
    "#!/bin/sh
 
-$0
-
-# end of file"
+$0"
    (point) (point)))
 (define-auto-insert "\\.sh$" 'insert-sh-template)
 
@@ -1235,6 +1233,12 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
    :body-table-hline-start "aaaaa"
    :body-table-hline-end   "bbbbb"
    ))
+
+;;
+;; twittering-mode
+;;
+(require 'twittering-mode)
+(setq twittering-use-master-password t)
 
 ;;
 ;; 開いてるキーバインド
