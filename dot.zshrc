@@ -222,7 +222,7 @@ fi
 /usr/bin/xmodmap $HOME/.Xmodmap 2> /dev/null
 
 function select-history-with-peco() {
-    BUFFER="`history -n 1 | tac | peco --query "$BUFFER"`"
+    BUFFER="`history -r -n 1 | peco --query "$BUFFER"`"
     CURSOR=$#BUFFER
     zle clear-screen
 }
