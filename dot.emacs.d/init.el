@@ -1241,6 +1241,13 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (setq twittering-use-master-password t)
 
 ;;
+;; for google chrome extension
+;;
+(require 'edit-server)
+(edit-server-start)
+(setq edit-server-new-frame nil)
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
