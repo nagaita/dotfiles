@@ -28,6 +28,9 @@
   "Create my-local-dir/PATH as local file path."
   (concat my-local-dir "/" path))
 
+(setq auto-save-list-file-prefix
+      (concat my-local-dir "/auto-save-list/.saves-"))
+
 ;; font size
 (when window-system
   (set-face-font
