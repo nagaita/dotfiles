@@ -29,16 +29,13 @@ if [ -d "/opt/jena/latest/bin" ] ; then
     PATH="/opt/jena/latest/bin":$PATH
 fi
 
-if [ -d "/opt/go" ] ; then
-    export GOROOT="/opt/go"
-    export PATH="$PATH:$GOROOT/bin"
-
-    export GOPATH="$HOME/go"
-    export PATH="$PATH:$GOPATH/bin"
-fi
-
 export JAVA_LIBS="$HOME/.java:$JAVA_LIBS";
 export TEXMFHOME="$HOME/.texmf:$TEXMFHOME";
 export BIBINPUTS="$HOME/.bib:$BIBINPUTS";
 export BSTINPUTS="$HOME/.bst:$BSTINPUTS";
 export JENAROOT="/opt/jena/latest/";
+
+export GOROOT="$HOME/opt/go"
+export PATH="$PATH:$GOROOT/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
