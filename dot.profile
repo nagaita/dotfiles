@@ -35,7 +35,8 @@ export BIBINPUTS="$HOME/.bib:$BIBINPUTS";
 export BSTINPUTS="$HOME/.bst:$BSTINPUTS";
 export JENAROOT="/opt/jena/latest/";
 
+export PATH="$HOME/usr/share/bin:$PATH"
 export GOROOT="$HOME/opt/go"
-export PATH="$PATH:$GOROOT/bin"
+export PATH="$GOROOT/bin:$PATH"
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$GOPATH/bin:$PATH"
