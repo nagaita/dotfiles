@@ -790,7 +790,7 @@
 (defun insert-sh-template ()
   (interactive)
   (yas/expand-snippet
-   "#!/bin/sh
+   "#!/bin/sh -euvx
 
 $0"
    (point) (point)))
