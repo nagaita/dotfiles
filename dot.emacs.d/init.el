@@ -294,6 +294,7 @@
 ;; *.sh ファイルの保存時に、自動で実行権限を与える
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
 
 ;;
 ;; ファイル名が重複したとき，バッファの表示をわかりやすくする
@@ -795,6 +796,14 @@
 $0"
    (point) (point)))
 (define-auto-insert "\\.sh$" 'insert-sh-template)
+
+(define-auto-insert "\\.zsh$"
+  (lambda ()
+    (interactive)
+    (yas/expand-snippet
+     "#!/usr/bin/env zsh
+
+$0")))
 
 ;;
 ;; org
