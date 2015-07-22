@@ -231,6 +231,12 @@ function select-history-with-peco() {
 zle -N select-history-with-peco
 bindkey '^r' select-history-with-peco
 
+function fetch-path-with-peco() {
+    BUFFER="$BUFFER $(find . | peco)"
+}
+zle -N fetch-path-with-peco
+bindkey '^x^f' fetch-path-with-peco
+
 #
 # cd-bookmark
 #
