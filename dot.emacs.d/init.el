@@ -1260,6 +1260,14 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (setq edit-server-new-frame nil)
 
 ;;
+;; slime
+;;
+(add-to-list 'load-path "~/opt/slime")
+(require 'slime-autoloads)
+(setq inferior-lisp-program "~/usr/bin/ccl")
+(setq slime-contribs '(slime-repl slime-fancy slime-banner))
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
