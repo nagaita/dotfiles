@@ -38,8 +38,8 @@ export JENAROOT="/opt/jena/latest/";
 export JAVA_HOME=$HOME/opt/jdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-export PATH="$HOME/usr/share/bin:$PATH"
 export PATH="$HOME/usr/bin:$PATH"
+
 export GOROOT="$HOME/opt/go"
 export PATH="$GOROOT/bin:$PATH"
 export GOPATH="$HOME/go"
