@@ -244,3 +244,6 @@ bindkey '^x^f' fetch-path-with-peco
 alias b='cd_with_bookmark'
 alias ba='add_bookmark'
 alias be='edit_bookmark'
+
+export PECO_HOME=$HOME/opt/peco
+PATH=$PECO_HOME:$PATH
