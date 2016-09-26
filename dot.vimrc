@@ -321,3 +321,5 @@ let g:indent_guides_auto_colors = 1
 let howm_dir        = '~/Dropbox/howm'
 let howm_filecoding = 'utf-8'
 let howm_fileformat = 'unix'
+
+imap <C-j> <esc>
