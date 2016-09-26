@@ -11,7 +11,6 @@ if has('vim_starting')
 endif
 
 NeoBundle 'motemen/hatena-vim'
-NeoBundle 'kakkyz81/evervim'
 NeoBundle 'hsitz/VimOrganizer'
 NeoBundle 'Shougo/neocomplcache.git'
 NeoBundle 'Shougo/neosnippet.git'
@@ -42,12 +41,6 @@ set guifontwide=Osaka\ 14
 "
 :set runtimepath+=$HOME/.vim/bundle/hatena-vim
 :let g:hatena_user='dededen'
-
-"
-" evervim
-"
-:set runtimepath+=$HOME/.vim/bundle/evervim
-:let g:evervim_devtoken='S=s262:U=1fda89f:E=1456a6beab1:C=13e12babeb5:P=1cd:A=en-devtoken:V=2:H=6badd51bb17ea1275ae2b156c02377a8'
 
 "
 " VimOrganizer
