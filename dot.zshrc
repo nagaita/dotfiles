@@ -148,6 +148,8 @@ alias la='ls -lah'
 alias rm='trash-put'
 alias mozconf='/usr/lib/mozc/mozc_tool -mode=config_dialog'
 alias mozdic='/usr/lib/mozc/mozc_tool --mode=dictionary_tool'
+alias v='vim'
+alias l='less -iMR'
 alias e='emacsclient -n'
 alias ee='emacsclient -nw'
 alias g='my-git'
@@ -245,5 +247,6 @@ alias b='cd_with_bookmark'
 alias ba='add_bookmark'
 alias be='edit_bookmark'
 
-export PECO_HOME=$HOME/opt/peco
-PATH=$PECO_HOME:$PATH
+PATH=$HOME/opt/peco:$PATH
+PATH=$HOME/opt/sqldeveloper:$PATH
+PATH=$HOME/opt/eclipse:$PATH
