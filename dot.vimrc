@@ -323,3 +323,8 @@ let howm_filecoding = 'utf-8'
 let howm_fileformat = 'unix'
 
 imap <C-j> <esc>
+
+NeoBundle 'vim-scripts/vim-auto-save'
+
+" デフォルトで有効にする
+let g:auto_save = 1
