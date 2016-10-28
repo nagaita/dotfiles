@@ -223,8 +223,6 @@ if [ -z "$TMUX" -a -z "$STY" ]; then
     fi
 fi
 
-/usr/bin/xmodmap $HOME/.Xmodmap 2> /dev/null
-
 function select-history-with-peco() {
     BUFFER="`history -r -n 1 | peco --query "$BUFFER"`"
     CURSOR=$#BUFFER
@@ -247,6 +245,3 @@ alias b='cd_with_bookmark'
 alias ba='add_bookmark'
 alias be='edit_bookmark'
 
-PATH=$HOME/opt/peco:$PATH
-PATH=$HOME/opt/sqldeveloper:$PATH
-PATH=$HOME/opt/eclipse:$PATH
