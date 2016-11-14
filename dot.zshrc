@@ -237,6 +237,12 @@ function fetch-path-with-peco() {
 zle -N fetch-path-with-peco
 bindkey '^x^f' fetch-path-with-peco
 
+function search-git-sha() {
+    BUFFER="$BUFFER $(git log --oneline | peco | cut -d\  -f1)"
+}
+zle -N search-git-sha
+bindkey '^x^g' search-git-sha
+
 #
 # cd-bookmark
 #
