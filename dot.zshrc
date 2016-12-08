@@ -152,6 +152,8 @@ alias v='vim'
 alias l='less -iMR'
 alias e='emacsclient -n'
 alias ee='emacsclient -nw'
+alias h='head'
+alias t='tail'
 alias g='my-git'
 function my-git() {
     local oper="$argv[1]"
@@ -250,4 +252,3 @@ bindkey '^x^g' search-git-sha
 alias b='cd_with_bookmark'
 alias ba='add_bookmark'
 alias be='edit_bookmark'
-
