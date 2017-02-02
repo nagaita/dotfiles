@@ -56,6 +56,7 @@ function run_go() {
         esac
     done
 }
+alias -s R=Rscript
 
 #
 # global alias
