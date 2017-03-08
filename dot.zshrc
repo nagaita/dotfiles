@@ -75,6 +75,9 @@ alias -g S='| sort'
 alias -g W='| wc'
 alias -g WL='| wc -l'
 alias -g C='$(git log --oneline --branches | peco | cut -d" " -f1)'
+alias -g F='$(find . -maxdepth 1 -type f -not -path '"'"'*/\.*'"'"' | peco)'
+alias -g FR='$(find . -type f -not -path '"'"'*/\.*'"'"' | peco)'
+alias -g FA='$(find . -type f | peco)'
 
 #
 # 補完
