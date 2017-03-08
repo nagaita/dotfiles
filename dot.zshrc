@@ -74,6 +74,7 @@ alias -g X='| xargs'
 alias -g S='| sort'
 alias -g W='| wc'
 alias -g WL='| wc -l'
+alias -g C='$(git log --oneline --branches | peco | cut -d" " -f1)'
 
 #
 # 補完
@@ -253,3 +254,5 @@ bindkey '^x^g' search-git-sha
 alias b='cd_with_bookmark'
 alias ba='add_bookmark'
 alias be='edit_bookmark'
+
+alias sts='(cd ~/opt/spring-tool-suite-3.8.3.RELEASE-e4.6.2-linux-gtk-x86_64/sts-bundle/sts-3.8.3.RELEASE/ > /dev/null 2>&1; ./STS)'
