@@ -1,0 +1,10 @@
+[core]
+	editor = vim
+[alias]
+    st = status
+    co = checkout
+    ci = commit   # check in
+    logo = log --oneline
+    d = diff
+[user]
+	useConfigOnly = true
