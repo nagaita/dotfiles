@@ -78,6 +78,7 @@ alias -g C='$(git log --oneline --branches | peco | cut -d" " -f1)'
 alias -g F='$(find . -maxdepth 1 -type f -not -path '"'"'*/\.*'"'"' | peco)'
 alias -g FR='$(find . -type f -not -path '"'"'*/\.*'"'"' | peco)'
 alias -g FA='$(find . -type f | peco)'
+alias -g M='$(git ls-files -m | peco)'
 
 #
 # 補完
