@@ -8,3 +8,4 @@ ln -sfv $(pwd)/dot.vimrc $HOME/.vimrc
 ln -sfv $(pwd)/dot.zshrc $HOME/.zshrc
 ln -sfv $(pwd)/dot.zshenv $HOME/.zshenv
 ln -sfv $(pwd)/dot.emacs.d $HOME/.emacs.d
+ln -sfv $(pwd)/config.fish $HOME/.config/fish/
