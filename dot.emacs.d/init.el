@@ -801,9 +801,11 @@ $0")))
 ;; すぐ開けるように
 (key-chord-define-global "fj" (lambda ()
                                 (interactive)
-                                (find-file "~/Dropbox/org/tac.org")))
-
-;; http://d.hatena.ne.jp/tamura70/20100207/org
+                                (let ((file-path "~/any/any.org"))
+                                  (cond ((equal buffer-file-name (expand-file-name file-path))
+                                         (kill-this-buffer))
+                                        (t
+                                         (find-file file-path))))))
 
 ;; TODO状態
 (setq org-todo-keywords
