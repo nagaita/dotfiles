@@ -2,18 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun add-to-laod-path (&rest paths)
-  "Add PATHS and subdirectory to load path."
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory
-	      (expand-file-name (concat user-emacs-directory path))))
-	(add-to-list 'load-path default-directory)
-	(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-	    (normal-top-level-add-subdirs-to-load-path))))))
-
-(add-to-laod-path "public-repos" "site-lisp" "elpa")
-
 ;;
 ;; ローカルなファイルは .emacs.d ではなく .emacs.local に保存する
 ;;
@@ -31,12 +19,9 @@
 (setq auto-save-list-file-prefix
       (concat my-local-dir "/auto-save-list/.saves-"))
 
-;; font size
-(when window-system
-  (set-face-font
-   'default
-   "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1"))
+;;
 ;; theme
+;;
 (load-theme 'misterioso t)
 (setq default-frame-alist
       (append (list '(cursor-color . "white")) default-frame-alist))
@@ -227,7 +212,6 @@
   (interactive)
   (eshell)
   (goto-char (point-max)))
-;;(define-key global-map (kbd "C-c w") 'w3m)                ; emacs-w3m
 
 ;;
 ;; C-c C-(1文字)
@@ -351,14 +335,21 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;;
-;; gist.el
+;; package.el
 ;;
-(require 'gist)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
+(package-refresh-contents)
 
 ;;
 ;; auto-async-byte-compile
 ;;    el ファイルを保存すると elc ファイルを自動生成
 ;;______________________________________________________________________________
+(package-install 'auto-async-byte-compile)
 (require 'auto-async-byte-compile)
 (setq auto-async-byte-compile-exclude-files-regexp "/junk/")
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
@@ -378,26 +369,30 @@
 ;; 気の利いた振る舞いをするようになる
 ;; (c-a, c-e, m-C, M-U, ...)
 ;;==========================================
+(package-install 'sequential-command)
 (require 'sequential-command-config)
 (sequential-command-setup-keys)
 
 ;;== ipa.el ==========================
 ;; ファイルに直接書きこまずにメモをとる
 ;;====================================
-(require 'ipa)
+;(package-install 'ipa)
+;(require 'ipa)
 
 ;;== tempbuf.el ======================
 ;; 使わなくなったバッファを自動的に消す
 ;;====================================
-(require 'tempbuf)
+;(package-install 'tempbuf) ; cannot due to the source in emacs wiki
+;(require 'tempbuf)
 ;; ファイルを開いたら自動的に tmpbuf を有効にする
-(add-hook 'find-file-hooks 'turn-on-tempbuf-mode)
+;(add-hook 'find-file-hooks 'turn-on-tempbuf-mode)
 ;; dired バッファに対して tempbuf を有効にする
-(add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
+;(add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
 
 ;;== popwin.el =================
 ;; バッファをポップアップ表示する
 ;;==============================
+(package-install 'popwin)
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 ;; diredバッファをフレームの上部にポップアップ表示
@@ -406,11 +401,13 @@
 ;;== smart-compile.el =====
 ;; m-x compile の挙動の改善
 ;;=========================
+(package-install 'smart-compile)
 (require 'smart-compile)
 
 ;;== key-chord.el =====
 ;; キー同時押しコマンド
 ;;=====================
+(package-install 'key-chord)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.05)
 (key-chord-mode 1)
@@ -419,6 +416,7 @@
 ;;== auto-complete ===
 ;; ideのような入力支援
 ;;====================
+(package-install 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
 (setq ac-comphist-file (create-local-file-path "ac-comphist.dat"))
@@ -426,55 +424,38 @@
 ;;== undo-tree =======
 ;; undo コマンドの改善
 ;;====================
+(package-install 'undo-tree)
 (require 'undo-tree)
 (global-undo-tree-mode)
 
 ;;== undohist ==========
 ;; undo の履歴管理を改善
 ;;======================
+(package-install 'undohist)
 (require 'undohist)
-(undohist-initialize)
 (setq undohist-directory (create-local-file-path "undohist"))
+(undohist-initialize)
 
 ;;== minor-mode-hack =============
 ;; マイナーモード衝突問題を解決する
 ;;================================
+(package-install 'minor-mode-hack)
 (require 'minor-mode-hack)
 
 ;;== auto-save-buffers =====
 ;; ファイルを自動で保存する
 ;;==========================
-(require 'auto-save-buffers)
-;; アイドル 0.1 秒で保存 / *.el だけ除外
-(run-with-idle-timer 0.5 t 'auto-save-buffers "" "\\.el$")
+(package-install 'auto-save-buffers-enhanced)
+(auto-save-buffers-enhanced t)
+(setq auto-save-buffers-enhanced-exclude-regexps '("\\.el$"))
 
 ;;== hideshow.el =======
 ;; ブロックを折りたたむ
 ;;======================
 (require 'hideshow)
+(package-install 'fold-dwim)
 (require 'fold-dwim)
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
-
-;;
-;; hatena daily
-;;______________________________________________________________________________
-(cond ((locate-library "hatena-diary-mode")
-       "hatena-diary-mode.elが存在する"
-       (autoload 'hatena "hatena-diary-mode" nil t)
-       (eval-after-load "hatena-diary-mode"
-	 '(progn
-	    (message "load file hatena-diary-mode.el.")
-            (setq hatena-usrid "taczge")
-	    (setq hatena-twitter-flag t))))
-      (t
-       "hatena-diary-mode.elが存在しない"
-       (message "cannot find file hatena-diary-mode.el.")))
-(add-hook 'hatena-diary-mode-hook 'hatenahelper-mode)
-
-;;
-;; hatenahelper-mode
-;;______________________________________________________________________________
-(autoload 'hatenahelper-mode "hatenahelper-mode" nil t)
 
 ;;== html-helper-mode ==
 ;; html記法の入力支援
@@ -484,6 +465,7 @@
 ;;== open-junk-file.el =====
 ;; 試行錯誤用ファイルを開く
 ;;==========================
+(package-install 'open-junk-file)
 (require 'open-junk-file)
 (setq open-junk-file-format "~/.junk/%y/%m/%d-%h%m%s.")
 (global-set-key (kbd "C-x C-z") 'open-junk-file)
@@ -491,12 +473,14 @@
 ;;== lispxmp.el ==========
 ;; 式の評価結果を注釈する
 ;;========================
+(package-install 'lispxmp)
 (require 'lispxmp)
 (define-key emacs-lisp-mode-map (kbd "C-c C-d") 'lispxmp)
 
 ;;== paredit.el ================
 ;; 括弧の対応を保持して編集する
 ;;==============================
+(package-install 'paredit)
 (require 'paredit)
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
@@ -532,25 +516,26 @@
 ;; アクティブウィンドウを目立たせる
 ;;    色見本: http://suiten.wig.nu/text/diary/1999/rgb.html
 ;;==========================================================
+(package-install 'hiwin)
 (require 'hiwin)
-;; hiwin-modeを有効化
 (hiwin-activate)
-;; 非アクティブウィンドウの背景色を設定
 (set-face-background 'hiwin-face "grey48")
 
 ;;
 ;; color-moccur
-;;______________________________________________________________________________
+;;
+(package-install 'color-moccur)
 (require 'color-moccur)
 
 ;;
 ;; moccur-edit
-;;______________________________________________________________________________
+;;
+(package-install 'moccur-edit)
 (require 'moccur-edit)
 
 ;;
 ;; magit
-;;______________________________________________________________________________
+;;
 (autoload 'magit "magit" t)
 
 ;; diffの表示方法を変更
@@ -585,22 +570,16 @@
 ;;
 ;; scala-mode
 ;; ref: http://d.hatena.ne.jp/tototoshi/20100925/1285420294#
-(require 'scala-mode2)
-(add-to-list 'auto-mode-alist
-             '("\\.scala" . scala-mode2)
-             '("\\.sbt\\'" . scala-mode2))
-
-(require 'sstdd)
-(add-hook 'scala-mode-hook
-	  '(lambda ()
-             (local-set-key (kbd "C-c 9")
-                            'sstdd-cmd-toggle-testing-pair)
-             (local-set-key (kbd "C-c 0")
-                            'sstdd-insert-test-only-command-to-eshell)))
+;(package-install 'scala-mode2)
+;(require 'scala-mode2)
+;(add-to-list 'auto-mode-alist
+;             '("\\.scala" . scala-mode2)
+;             '("\\.sbt\\'" . scala-mode2))
 
 ;;
 ;; point-undo
 ;;
+(package-install 'point-undo)
 (require 'point-undo)
 ;;(define-key global-map (kbd "M-[") 'point-undo)
 ;;(define-key global-map (kbd "M-]") 'point-redo)
@@ -609,6 +588,7 @@
 ;;
 ;; ファイルの位置にブックマークをつける
 ;;______________________________________________________________________________
+(package-install 'bm)
 (require 'bm)
 (setq-default bm-buffer-persistence nil)
 (setq bm-restore-repository-on-load t)
@@ -624,20 +604,28 @@
 ;;
 ;; quickrun
 ;;______________________________________________________________________________
+(package-install 'quickrun)
 (require 'quickrun)
 ;; 結果の出力バッファと元のバッファを行き来したい場合は
 ;; ':stick t'の設定をするとよいでしょう
 (push '("*quickrun*") popwin:special-display-config)
 (global-set-key (kbd "C-c c") 'quickrun)
 
+(package-install 'direx)
 (require 'direx)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
-;; w.r.t. elisp unit test
+;;
+;; elisp unit test
+;;
+(package-install 'ert-expectations)
+(package-install 'el-mock)
 (require 'ert-expectations)
 (require 'el-mock)
 
+;;
 ;; tree
+;;
 (eval-after-load "tree-widget"
   '(if (boundp 'tree-widget-themes-load-path)
        (add-to-list 'tree-widget-themes-load-path "~/.emacs.d/")))
@@ -646,7 +634,8 @@
 
 ;;
 ;; multiple-cursors
-;;______________________________________________________________________________
+;;
+(package-install 'multiple-cursors)
 (require 'multiple-cursors)
 (setq mc/list-file (create-local-file-path ".mc-lists.el"))
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -655,7 +644,8 @@
 
 ;;
 ;; expand-region
-;;______________________________________________________________________________
+;;
+(package-install 'expand-region)
 (require 'expand-region)
 (global-set-key (kbd "C-`") 'er/expand-region)
 (global-set-key (kbd "C-M-`") 'er/contract-region)
@@ -669,48 +659,35 @@
             (add-hook 'doc-view-mode-hook 'auto-revert-mode)))
 
 ;;
-;; grep-deit.el
-;;______________________________________________________________________________
-(require 'grep-edit)
+;; grep-edit.el
+;;
+; TODO
+;(package-install 'grep-edit)
+;(require 'grep-edit)
 
 ;;
 ;; 日本語校正
-;;______________________________________________________________________________
-(require 'yspel)
+;;
+; TODO
+;(require 'yspel)
 
 ;;
 ;; jump around
-;;______________________________________________________________________________
+;;
+(package-install 'ace-jump-mode)
 (require 'ace-jump-mode)
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 
 ;;
-;; package
-;;______________________________________________________________________________
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-
-;;
 ;; w3m
-;;______________________________________________________________________________
+;;
+(package-install 'w3m)
 (autoload 'w3m "w3m" "w3m mode" t)
 
 ;;
-;; hatena
-;;______________________________________________________________________________
-(require 'hatena-diary)
-(require 'hatena-markup-mode)
-(setq hatena:d:major-mode 'hatena:markup-mode)
-(require 'hatena-multi-mode)
-(add-hook 'hatena:markup-mode-hook 'hatena:multi-mode)
-
-;;
 ;; for turtle
-;;______________________________________________________________________________
+;;
+(package-install 'ttl-mode)
 (autoload 'ttl-mode "ttl-mode" "major mode for owl or turtle files" t)
 (add-hook 'ttl-mode-hook    ; turn on font lock when in ttl mode
           'turn-on-font-lock)
@@ -722,18 +699,9 @@
        auto-mode-alist))
 
 ;;
-;; for sparql
-;;______________________________________________________________________________
-(autoload 'sparql-mode "sparql-mode.el"
-  "major mode for editing sparql files" t)
-(add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
-(add-to-list 'auto-mode-alist '("\\.rq$" . sparql-mode))
-;;(add-to-list 'ac-dictionary-files "/path/to/sparql-mode-dir/sparql-mode")
-;;(add-hook 'sparql-mode-hook 'auto-complete-mod)e
-
+;; markdown
 ;;
-;; for markdown
-;;______________________________________________________________________________
+(package-install 'markdown-mode)
 (autoload 'markdown-mode "markdown-mode"
   "major mode for editing markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -742,18 +710,21 @@
 
 ;;
 ;; flycheck
-;;______________________________________________________________________________
+;;
+(package-install 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;
 ;; pomodoro
-;;______________________________________________________________________________
+;;
+(package-install 'pomodoro)
 (require 'pomodoro)
 (setq pomodoro:file "~/Dropbox/org/pom.org")
 
 ;;
 ;; yasnippet
-;;______________________________________________________________________________
+;;
+(package-install 'yasnippet)
 (require 'yasnippet)
 (yas/initialize)
 
@@ -807,18 +778,12 @@ $0")))
 
 ;;
 ;; org
-;;______________________________________________________________________________
+;;
 (require 'org)
-
-;; org-modeの初期化
 (require 'org-install)
-
-;; キーバインドの設定
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cr" 'org-capture)
-
-;; 拡張子がorgのファイルを開いた時，自動的にorg-modeにする
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;; org-modeでの強調表示を可能にする
@@ -836,17 +801,19 @@ $0")))
 ;; すぐ開けるように
 (key-chord-define-global "fj" (lambda ()
                                 (interactive)
-                                (find-file "~/Dropbox/org/tac.org")))
-;;
-;; http://d.hatena.ne.jp/tamura70/20100207/org
-;;______________________________________________________________________________
+                                (let ((file-path "~/any/any.org"))
+                                  (cond ((equal buffer-file-name (expand-file-name file-path))
+                                         (kill-this-buffer))
+                                        (t
+                                         (find-file file-path))))))
+
 ;; TODO状態
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "SOMEDAY(s)")))
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
-;; ===== org-agenda 関連 ====================
+;; org-agenda
 ;; アジェンダ表示の対象ファイル
 (setq org-agenda-files (list org-directory))
 ;; アジェンダ表示で下線を用いる
@@ -872,17 +839,9 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
     (t (org-insert-heading nil))))
 (define-key org-mode-map (kbd "<C-return>") 'org-insert-heading-dwim)
 
-;;
-;; メモを取りやすくする
-;;______________________________________________________________________________
 (require 'org-capture)
-;;(org-remember-insinuate)
-
-;; メモを保存するorgファイルのパス
 (setq org-directory "~/Dropbox/org")
 (setq org-default-notes-file (expand-file-name "tac.org" org-directory))
-
-;; 押しやすく
 (key-chord-define-global "jk" 'org-remember)
 
 ;; テンプレートの設定
@@ -895,11 +854,7 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 ;;         ("Words" ?w "** %? %t"      nil "Words")
 ;;         ))
 
-;;
-;; agenda
-;;
-;; ref: http://d.hatena.ne.jp/tamura70/20100208/org
-;;______________________________________________________________________________
+;; agenda ref: http://d.hatena.ne.jp/tamura70/20100208/org
 ;; アジェンダ表示の対象ファイル
 (setq org-agenda-files (list org-directory))
 ;; アジェンダ表示で下線を用いる
@@ -909,12 +864,11 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (setq calendar-holidays nil)
 
 ;;
-;; latex-export に関する設定
-;;______________________________________________________________________________
+;; latex-export
+;;
 (require 'ox-latex)
 (setq org-export-latex-coding-system 'utf-8-unix)
 (setq org-export-latex-date-format "%Y-%m-%d")
-;;(setq org-export-latex-classes nil)
 (add-to-list 'org-latex-classes
   '("jarticle"
     "
@@ -948,7 +902,8 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 
 ;;
 ;; yatex
-;;______________________________________________________________________________
+;;
+(package-install 'yatex)
 (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
 (setq auto-mode-alist
       (append '(("\\.tex$" . yatex-mode)
@@ -1050,7 +1005,6 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 
 (defun th-evince-sync (file linecol &rest ignored)
   (let* ((fname (un-urlify file))
- ;        (buf (find-buffer-visiting fname))
          (buf (find-file fname))
          (line (car linecol))
          (col (cadr linecol)))
@@ -1079,28 +1033,29 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 
 ;;
 ;; helm
-;;______________________________________________________________________________
+;;
+(package-install 'helm)
 (require 'helm-config)
 (helm-mode 1)
-
 (define-key global-map (kbd "M-x")     'helm-M-x)
 (define-key global-map (kbd "C-x C-f") 'helm-find-files)
 (define-key global-map (kbd "C-x C-r") 'helm-recentf)
 (define-key global-map (kbd "C-x b")   'helm-buffers-list)
 (define-key global-map (kbd "M-y")     'helm-show-kill-ring)
 (define-key global-map (kbd "C-c j")   'helm-mini)
-
 (define-key helm-map (kbd "C-h") 'delete-backward-char)
 (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
 ;;
 ;; git-gitter
 ;;
+(package-install 'git-gutter)
 (global-git-gutter-mode t)
 
 ;;
 ;; sass
 ;;
+(package-install 'scss-mode)
 (require 'scss-mode)
 (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
 (defun scss-custom ()
@@ -1184,86 +1139,30 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 ;;
 ;; for reveal.js with org-mode
 ;;
+(package-install 'ox-reveal)
 (require 'ox-reveal)
 
 ;;
 ;; anzu
 ;;
+(package-install 'anzu)
 (global-anzu-mode +1)
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
 ;;
-;; org-export
+;; twitter
 ;;
-;; (require 'org-export-generic)
-;; (org-set-generic-type
-;;  "blog"
-;;  '(:file-suffix    ".html"
-;;    :key-binding    ?B
-
-;;    :date-export    nil
-;;    :toc-export     nil
-;;    :author-export  nil
-;;    :tags-export    nil
-;;    :drawers-export nil
-
-;;    :title-format   ""
-
-;;    :body-header-section-numbers nil
-
-;;    :body-section-header-prefix  ("<h1>" "<h2>" "<h3>" "<h4>" "<h5>" "<h6>")
-;;    :body-section-header-format  "%s"
-;;    :body-section-header-suffix  ("</h1>\n" "</h2>\n" "</h3>\n"
-;;                                "</h4>\n" "</h5>\n" "</h6>\n")
-
-;;    :body-line-export-preformated t
-;;    :body-line-format "%s\n"
-;;    :body-text-prefix "<p>\n"
-;;    :body-text-suffix "</p>\n"
-
-;;    :body-bullet-list-prefix       (?* ?+ ?-)
-;;    :body-list-prefix              "<ul>\n"
-;;    :body-list-suffix              "</ul>\n"
-;;    :body-list-format              "<li>%s</li>\n"
-;;    :body-number-list-prefix       "<ol>\n"
-;;    :body-number-list-suffix       "</ol>\n"
-;;    :body-number-list-format       "<li>%s</li>\n"
-
-;;    :body-table-start               "<table>"
-;;    :body-table-end                 "</table>"
-;;    :body-table-row-start           "<tr>"
-;;    :body-table-row-end             "</tr>"
-;;    :body-table-cell-start          "<td>"
-;;    :body-table-cell-end            "</td>"
-;; ;   :body-table-first-cell-start    "aaa"
-;; ;   :body-table-interior-cell-start "bbb"
-;; ;   :body-table-interior-cell-end   "ccc"
-;; ;   :body-table-last-cell-end       "ddd"
-;; ;   :body-table-hline-start         "eee"
-;; ;   :body-table-hline-end           "fff"
-;;    :body-table-hline-start "aaaaa"
-;;    :body-table-hline-end   "bbbbb"
-;;    ))
-
-;;
-;; twittering-mode
-;;
+(package-install 'twittering-mode)
 (require 'twittering-mode)
 (setq twittering-use-master-password t)
 
 ;;
-;; for google chrome extension
-;;
-(require 'edit-server)
-(edit-server-start)
-(setq edit-server-new-frame nil)
-
-;;
 ;; slime
 ;;
-(add-to-list 'load-path "~/opt/slime")
+(package-install 'slime)
 (require 'slime-autoloads)
+(add-to-list 'load-path "~/opt/slime")
 (setq inferior-lisp-program "~/usr/bin/ccl")
 (setq slime-contribs '(slime-repl slime-fancy slime-banner))
 
