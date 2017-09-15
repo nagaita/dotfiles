@@ -260,3 +260,14 @@ alias ba='add_bookmark'
 alias be='edit_bookmark'
 
 alias sts='(cd ~/opt/spring-tool-suite-3.8.3.RELEASE-e4.6.2-linux-gtk-x86_64/sts-bundle/sts-3.8.3.RELEASE/ > /dev/null 2>&1; ./STS)'
+
+#
+# git
+#    ref. https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
+#
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '[%b]'
