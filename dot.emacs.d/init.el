@@ -1169,6 +1169,13 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (setq slime-contribs '(slime-repl slime-fancy slime-banner))
 
 ;;
+;; Docker
+;;
+(package-install 'dockerfile-mode)
+(autoload 'dockerfile-mode "dockerfile-mode" nil t)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+;;
 ;; 開いてるキーバインド
 ;;
 ;; C-M-{
