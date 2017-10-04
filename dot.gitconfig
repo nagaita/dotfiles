@@ -1,10 +1,23 @@
 [core]
-	editor = vim
+    editor = vim
 [alias]
+    ci = commit 
     st = status
+
     co = checkout
+    cb = checkout -b
     ci = commit   # check in
     logo = log --oneline
     d = diff
+    dc = diff --cached
+    dh = diff HEAD
+    b = "!f() { git branch | peco; }; f"
+
+    one = log --pretty=oneline 
+    br = branch 
+    la = log --pretty="format:[%ad] %h (%an): %s" --date=short
+
+
 [user]
 	useConfigOnly = true
+	name = Takuma Nagai

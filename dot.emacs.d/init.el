@@ -713,6 +713,7 @@
 ;;
 (package-install 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-shellcheck-follow-sources nil)
 
 ;;
 ;; pomodoro
@@ -809,7 +810,8 @@ $0")))
 
 ;; TODO状態
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "SOMEDAY(s)")))
+      '((sequence "TODO(t)" "DOING(i)" "WAITING(w)" "|" "DONE(d)" "CANCEL(c)")))
+
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
@@ -1049,8 +1051,8 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 ;;
 ;; git-gitter
 ;;
-(package-install 'git-gutter)
-(global-git-gutter-mode t)
+;(package-install 'git-gutter)
+;(global-git-gutter-mode t)
 
 ;;
 ;; sass
@@ -1165,6 +1167,13 @@ C-u をつけると1レベル上、C-u C-u をつけると1レベル下の見出
 (add-to-list 'load-path "~/opt/slime")
 (setq inferior-lisp-program "~/usr/bin/ccl")
 (setq slime-contribs '(slime-repl slime-fancy slime-banner))
+
+;;
+;; Docker
+;;
+(package-install 'dockerfile-mode)
+(autoload 'dockerfile-mode "dockerfile-mode" nil t)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;;
 ;; 開いてるキーバインド
