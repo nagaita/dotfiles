@@ -4,7 +4,7 @@
 setopt auto_cd
 
 # cd のあとに自動で ls
-function chpwd() { ls -F --color=auto }
+function chpwd() { ls }
 
 # cd コマンドだけでディレクトリスタックに pushd する
 setopt auto_pushd
@@ -148,7 +148,15 @@ alias touch='nocorrect touch'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ls='ls -F --color=auto'
+case ${OSTYPE} in
+    darwin*)
+        alias ls='ls -FG'
+        ;;
+    linux*)
+        alias ls='ls -F --color=auto'
+        ;;
+esac
+
 alias ll='ls -lh'
 alias la='ls -lah'
 alias rm='trash-put'
@@ -254,10 +262,10 @@ bindkey '^x^g' search-git-sha
 #
 # cd-bookmark
 #
-. $HOME/bin/dirbm.sh
-alias b='cd_with_bookmark'
-alias ba='add_bookmark'
-alias be='edit_bookmark'
+#. $HOME/bin/dirbm.sh
+#alias b='cd_with_bookmark'
+#alias ba='add_bookmark'
+#alias be='edit_bookmark'
 
 alias sts='(cd ~/opt/spring-tool-suite-3.8.3.RELEASE-e4.6.2-linux-gtk-x86_64/sts-bundle/sts-3.8.3.RELEASE/ > /dev/null 2>&1; ./STS)'
 
