@@ -4,7 +4,16 @@
 setopt auto_cd
 
 # cd のあとに自動で ls
-function chpwd() { ls }
+function chpwd() {
+  case ${OSTYPE} in
+      darwin*)
+          ls -FG
+          ;;
+      linux*)
+          ls -F --color=auto
+          ;;
+  esac
+}
 
 # cd コマンドだけでディレクトリスタックに pushd する
 setopt auto_pushd
@@ -258,6 +267,17 @@ function search-git-sha() {
 }
 zle -N search-git-sha
 bindkey '^x^g' search-git-sha
+
+function peco-ghq () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-ghq
+bindkey '^g' peco-ghq
 
 #
 # cd-bookmark
