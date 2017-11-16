@@ -269,7 +269,7 @@ zle -N search-git-sha
 bindkey '^x^g' search-git-sha
 
 function peco-ghq () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  local selected_dir=$(ghq list | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
@@ -277,7 +277,7 @@ function peco-ghq () {
   zle clear-screen
 }
 zle -N peco-ghq
-bindkey '^g' peco-ghq
+bindkey '^u' peco-ghq
 
 #
 # cd-bookmark
