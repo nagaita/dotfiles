@@ -89,6 +89,7 @@ alias -g FR='$(find . -type f -not -path '"'"'*/\.*'"'"' | peco)'
 alias -g FA='$(find . -type f | peco)'
 alias -g M='$(git ls-files -m | peco)'
 
+
 #
 # 補完
 #
@@ -191,6 +192,8 @@ function my-git() {
             git $argv
     esac
 }
+alias cdj='cd $(find . -type d -maxdepth 1 | peco)'
+alias cdjj='cd $(find . -type d | peco)'
 
 function git-checkout-with-peco() {
     local branch_name=$(git branch -av | peco | sed -e 's/^..\([^ ]*\).*$/\1/g')
@@ -257,10 +260,18 @@ zle -N select-history-with-peco
 bindkey '^r' select-history-with-peco
 
 function fetch-path-with-peco() {
-    BUFFER="$BUFFER $(find . | peco)"
+    BUFFER="$BUFFER$(find . | peco) "
+    CURSOR=$#BUFFER
 }
 zle -N fetch-path-with-peco
 bindkey '^x^f' fetch-path-with-peco
+
+function peco-select-dir() {
+    BUFFER="$BUFFER$(find . -type d -maxdepth 1 | peco)"
+    CURSOR=$#BUFFER
+}
+zle -N peco-select-dir
+bindkey '^x^d' peco-select-dir
 
 function search-git-sha() {
     BUFFER="$BUFFER $(git log --oneline | peco | cut -d\  -f1)"
