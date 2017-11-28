@@ -7,6 +7,7 @@
     co = checkout
     cb = checkout -b
     ci = commit   # check in
+    cim = commit -m
     logo = log --oneline
     d = diff
     dc = diff --cached
