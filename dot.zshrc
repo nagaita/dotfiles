@@ -230,6 +230,10 @@ function cd-with-peco() {
     fi
 }
 
+function peco-ssh() {
+  ssh $(grep 'Host ' ~/.ssh/config | sed 's/^Host //' | peco)
+}
+
 # tmux/screenの自動起動設定
 #  Note: .bashrc or .zshrc に設定して使用して下さい。
 #
