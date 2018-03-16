@@ -1,6 +1,6 @@
 [core]
      editor = vim -u NONE -N
-     excludesfile = /Users/takuma.nagai/.gitignore_global
+     
 [alias]
     ci = commit
     st = status
