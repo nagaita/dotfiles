@@ -1,6 +1,6 @@
 [core]
      editor = vim -u NONE -N
-     
+
 [alias]
     ci = commit
     st = status
@@ -10,9 +10,18 @@
     ci = commit   # check in
     cim = commit -m
     logo = log --oneline
-    d = diff
-    dc = diff --cached
-    dh = diff HEAD
+
+    d  = diff          #                    index <-> working-tree
+    dh = diff HEAD     #           HEAD <-----------> working-tree
+    dc = diff --cached #           HEAD <-> index
+    d1 = diff HEAD~    # HEAD~ <--------------------> working-tree
+    d2 = diff HEAD~~
+    d3 = diff HEAD~~~
+    d4 = diff HEAD~~~~
+    d5 = diff HEAD~~~~~
+    dw = diff --color-words
+    dw = diff --color-words
+
     b = "!f() { git branch | peco; }; f"
 
     one = log --pretty=oneline
