@@ -1,27 +1,33 @@
 [core]
      editor = vim -u NONE -N
 
+[push]
+    default = current
+
+[pull]
+    rebase = true
+
 [alias]
-    ci = commit
     st = status
+    sts = status -s
 
     co = checkout
     cob = checkout -b
-    ci = commit   # check in
+    ci = commit
     cim = commit -m
+    cia = commit --amend
     logo = log --oneline
 
-    d  = diff          #                    index <-> working-tree
-    dh = diff HEAD     #           HEAD <-----------> working-tree
-    dc = diff --cached #           HEAD <-> index
-    d1 = diff HEAD~    # HEAD~ <--------------------> working-tree
-    d2 = diff HEAD~~
-    d3 = diff HEAD~~~
-    d4 = diff HEAD~~~~
-    d5 = diff HEAD~~~~~
-    dw = diff --color-words
-    dw = diff --color-words
+    com = checkout master
+    cod = checkout develop
+    cos = checkout staging
 
+    di  = diff
+    di1 = diff HEAD~
+    dh = diff HEAD
+    dc = diff --cached
+
+    cb = !git co $(git branch --format=‘%(refname:short)’ | peco)
     b = "!f() { git branch | peco; }; f"
 
     one = log --pretty=oneline
@@ -29,6 +35,7 @@
     la = log --pretty="format:[%ad] %h (%an): %s" --date=short
     us = reset HEAD
 
-[user]
-	useConfigOnly = true
-	name = Takuma Nagai
+[pager]
+    log = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+    show = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+    diff = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
