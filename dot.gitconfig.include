@@ -24,8 +24,8 @@
 
     di  = diff
     di1 = diff HEAD~
-    dh = diff HEAD
-    dc = diff --cached
+    dih = diff HEAD
+    dic = diff --cached
 
     cb = !git co $(git branch --format=‘%(refname:short)’ | peco)
     b = "!f() { git branch | peco; }; f"
