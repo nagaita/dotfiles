@@ -27,7 +27,7 @@
     dih = diff HEAD
     dic = diff --cached
 
-    cb = !git co $(git branch --format=‘%(refname:short)’ | peco)
+    cb = !git co $(git branch --format='%(refname:short)' | peco)
     b = "!f() { git branch | peco; }; f"
 
     one = log --pretty=oneline
