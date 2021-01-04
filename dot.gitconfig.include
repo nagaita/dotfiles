@@ -22,6 +22,11 @@
     cod = checkout develop
     cos = checkout staging
 
+    pr = pull --rebase
+    po = push origin
+    pof = push -f origin
+    pou = push -u origin
+
     di  = diff
     di1 = diff HEAD~
     dih = diff HEAD
