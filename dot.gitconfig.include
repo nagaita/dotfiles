@@ -8,8 +8,10 @@
     rebase = true
 
 [alias]
+    s = status
     st = status
     sts = status -s
+    a = add .
 
     co = checkout
     cob = checkout -b
