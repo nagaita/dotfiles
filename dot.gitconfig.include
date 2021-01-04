@@ -34,6 +34,9 @@
     dih = diff HEAD
     dic = diff --cached
 
+    rbc = rebase --continue
+    rba = rebase --abort
+
     cb = !git co $(git branch --format='%(refname:short)' | peco)
     b = "!f() { git branch | peco; }; f"
 
