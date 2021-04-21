@@ -18,6 +18,7 @@
     ci = commit
     cim = commit -m
     cia = commit --amend
+    cian = commit --amend --no-edit
     logo = log --oneline
 
     com = checkout master
