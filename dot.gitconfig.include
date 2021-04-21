@@ -1,3 +1,9 @@
+# Usage in ~/.gitconfig
+#
+# [include]
+#  path = ~/ghq/nagaita.github.com/nagaita/dotfiles/dot.gitconfig.include
+#
+
 [core]
      editor = vim -u NONE -N
 
