@@ -6,7 +6,7 @@
 # Create symbolic link in /usr/bin for diff-highlight
 #   * Ubuntu
 #       $ sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
-#       $ sudo ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/bin/diff-highlight
+#       $ sudo ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin/diff-highlight
 #
 
 
@@ -59,6 +59,6 @@
     us = reset HEAD
 
 [pager]
-    log = /usr/bin/diff-highlight | less
-    show = /usr/bin/diff-highlight | less
-    diff = /usr/bin/diff-highlight | less
+    log = /usr/local/bin/diff-highlight | less
+    show = /usr/local/bin/diff-highlight | less
+    diff = /usr/local/bin/diff-highlight | less
